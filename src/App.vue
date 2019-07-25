@@ -1,15 +1,78 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <!--img alt="Vue logo" src="https://i2.wp.com/periodicovictoria.mx/wp-content/uploads/2017/04/banner-logo-marvel-2.jpeg" !-->
+    <img alt="Vue logo" src="https://thumbs.gfycat.com/AdmiredExhaustedGermanshepherd-max-1mb.gif">
+
     <router-view></router-view>
+    <br>
+    <button v-on:click="changeCharacters">Characters</button>
+    <button v-on:click="changeComics">Comics</button>
+    <Lista v-if="inCharacters" :items="items" :title="'Characters'"/>
+        <Lista v-else-if="inComics" :items="items" :title="'Comics'"/>
+    <div>
+      <button v-on:click="previousPage">« Previous</button>
+      <button v-on:click="nextPage">Next »</button>
+    </div>
   </div>
 </template>
 
 <script>
+  /* eslint-disable no-console */
+  import marvelApi from "./marvelApi";
+  import Lista from "./components/Lista";
+
+  const api = new marvelApi();
 
 export default {
   name: 'app',
-  components: { }
+  components: { Lista },
+  created: function(){
+    api.getData('comics')
+            .then(
+                    (response) => {
+                      console.log(response);
+                      this.items = response.results;
+                    }
+            )
+  },
+  data: function () {
+      return {
+        currentPage: 0,
+        inComics: false,
+        inCharacters: true,
+        items: []
+      }
+  },
+  methods: {
+    changeCharacters: function () {
+      this.inCharacters = true;
+      this.inComics = false;
+      api.getData('characters')
+              .then(
+                      (response) => {
+                        console.log(response);
+                        this.items = response.results;
+                      }
+              )
+    },
+    changeComics: function () {
+      this.inCharacters = false;
+      this.inComics = true;
+      api.getData('comics')
+              .then(
+                      (response) => {
+                        console.log(response);
+                        this.items = response.results;
+                      }
+              )
+    },
+    previousPage: function () {
+      
+    },
+    nextPage: function () {
+      
+    }
+  }
 }
 </script>
 

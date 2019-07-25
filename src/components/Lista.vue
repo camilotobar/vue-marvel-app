@@ -1,9 +1,16 @@
 <template>
   <div class="lista">
-      Lista {{users.length}}
-    <ul>
-        <li v-bind:key="user.id" v-for="user in users">
-            {{ user.name }}
+      {{ title }}
+      <ul>
+        <li v-bind:key="item.id" v-for="item in items">
+            <div v-if="title === 'Comics'">
+                <i>{{ item.title }}</i>
+                <img v-bind:src="`${item.thumbnail.path}.jpg`"/> <br>
+            </div>
+            <div v-else>
+                <i>{{ item.name }}</i>
+                {{ item.description }}<br>
+            </div>
         </li>
     </ul>
   </div>
@@ -13,7 +20,8 @@
 export default {
   name: 'Lista',
   props: { 
-      users: Array
+      items: Array,
+      title: String
   }
 }
 </script>
@@ -28,10 +36,15 @@ ul {
   padding: 0;
 }
 li {
-  display: inline-block;
+  //display: inline-block;
   margin: 0 10px;
 }
 a {
   color: #42b983;
+}
+img{
+    width: 30px;
+    height: 30px;
+    border-radius: 170px;
 }
 </style>
