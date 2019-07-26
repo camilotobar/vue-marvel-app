@@ -3,7 +3,9 @@
     <!--img alt="Vue logo" src="https://i2.wp.com/periodicovictoria.mx/wp-content/uploads/2017/04/banner-logo-marvel-2.jpeg" !-->
     <img alt="Vue logo" src="https://thumbs.gfycat.com/AdmiredExhaustedGermanshepherd-max-1mb.gif">
 
-    <router-view></router-view>
+    <v-content>
+      <router-view></router-view>
+    </v-content>
     <br>
     <button v-on:click="changeCharacters">Characters</button>
     <button v-on:click="changeComics">Comics</button>
@@ -27,13 +29,7 @@ export default {
   name: 'app',
   components: { Lista },
   created: function(){
-    api.getData('comics')
-            .then(
-                    (response) => {
-                      console.log(response);
-                      this.items = response.results;
-                    }
-            )
+    this.requestToMarvel('characters');
   },
   data: function () {
       return {
@@ -47,30 +43,27 @@ export default {
     changeCharacters: function () {
       this.inCharacters = true;
       this.inComics = false;
-      api.getData('characters')
-              .then(
-                      (response) => {
-                        console.log(response);
-                        this.items = response.results;
-                      }
-              )
+      this.requestToMarvel('characters');
     },
     changeComics: function () {
       this.inCharacters = false;
       this.inComics = true;
-      api.getData('comics')
-              .then(
-                      (response) => {
-                        console.log(response);
-                        this.items = response.results;
-                      }
-              )
+      this.requestToMarvel('comics');
     },
     previousPage: function () {
       
     },
     nextPage: function () {
       
+    },
+    requestToMarvel: function (type, options) {
+      api.getData(type, options)
+              .then(
+                      (response) => {
+                        console.log(response);
+                        this.items = response.results;
+                      }
+              )
     }
   }
 }
@@ -84,5 +77,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  padding: 100px;
 }
 </style>

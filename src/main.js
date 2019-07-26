@@ -5,6 +5,7 @@ import Home from './components/Home.vue'
 import items from './components/Users.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import vuetify from './plugins/vuetify';
 
 Vue.config.productionTip = false
 
@@ -24,5 +25,6 @@ const router = new VueRouter(
 
 new Vue({
   router,
-  render: h => h(App),
+  vuetify,
+  render: h => h(App)
 }).$mount('#app')

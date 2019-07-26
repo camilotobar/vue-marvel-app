@@ -1,18 +1,24 @@
 <template>
   <div class="lista">
-      {{ title }}
-      <ul>
-        <li v-bind:key="item.id" v-for="item in items">
-            <div v-if="title === 'Comics'">
-                <i>{{ item.title }}</i>
-                <img v-bind:src="`${item.thumbnail.path}.jpg`"/> <br>
-            </div>
-            <div v-else>
-                <i>{{ item.name }}</i>
-                {{ item.description }}<br>
-            </div>
-        </li>
-    </ul>
+      {{ title.toUpperCase() }}
+      <br>
+      <v-container>
+          <v-layout row wrap>
+              <v-flex v-for="item in items" :key="item.id" xs4>
+                  <v-card v-if="title === 'Comics'">
+                      <v-img contain="true" height="180px" :src="`${item.thumbnail.path}.jpg`"></v-img>
+                      <v-card-title> {{ item.title }} </v-card-title>
+                      <v-card-text> {{ item.description }} </v-card-text>
+                  </v-card>
+                  <!-- img v-bind:src="`${item.thumbnail.path}.jpg`"/-->
+                  <v-card v-else>
+                      <v-img contain="true" height="180px" :src="`${item.thumbnail.path}.jpg`"></v-img>
+                      <v-card-title> {{ item.name }} </v-card-title>
+                      <v-card-text> {{ item.description }} </v-card-text>
+                  </v-card>
+              </v-flex>
+          </v-layout>
+      </v-container>
   </div>
 </template>
 
